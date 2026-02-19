@@ -5,21 +5,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ICBID Banner</title>
   <style>
-    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+    html, body { margin: 0; padding: 0; height: auto; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+
     #banner {
       position: relative;
-      background: #fff3cd;            /* soft warning yellow */
+      background: #fff3cd;
       border: 1px solid #ffeeba;
       color: #533f03;
-      padding: 12px 44px 12px 12px;   /* space for the X button */
+      padding: 10px 36px 10px 10px; /* space for X */
       font-size: 13px;
       line-height: 1.35;
       box-sizing: border-box;
     }
+
     #close {
       position: absolute;
-      right: 10px;
-      top: 10px;
+      right: 8px;
+      top: 8px;
       border: 0;
       background: transparent;
       font-size: 18px;
@@ -27,47 +30,30 @@
       color: #533f03;
       line-height: 1;
     }
-    /* Keeps the embed height small; banner sits in this small page */
-    .frame {
-      min-height: 88px;
-    }
-    @media (max-width: 600px) {
-      #banner { font-size: 12.5px; }
-      .frame { min-height: 110px; }
-    }
   </style>
 </head>
-
 <body>
-  <div class="frame">
-    <div id="banner" role="note" aria-label="Disclaimer banner">
-      <button id="close" aria-label="Dismiss banner">✕</button>
-
-      <strong>Note:</strong>
-      The India–China Boundary Incidents Database is compiled exclusively from open-source intelligence, and is provided solely for academic and research purposes.
-      All mapped locations are indicative only: the approximate area associated with an incident is shown (e.g., by an encircled zone) solely for contextualisation and analysis.
-      These depictions must not be interpreted, cited, or relied upon as precise incident coordinates, definitive site locations, or authoritative determinations of where an incident occurred.
-      Incident details are compiled from published, open-domain sources and are not attributable to the authors.
-    </div>
+  <div id="banner" role="note" aria-label="Disclaimer banner">
+    <button id="close" aria-label="Dismiss banner">✕</button>
+    <strong>Note:</strong> The India–China Boundary Incidents Database is compiled exclusively from open-source intelligence, and is provided solely for academic and research purposes. All mapped locations are indicative only: the approximate area associated with an incident is shown (e.g., by an encircled zone) solely for contextualisation and analysis. These depictions must not be interpreted, cited, or relied upon as precise incident coordinates, definitive site locations, or authoritative determinations of where an incident occurred. Incident details are compiled from published, open-domain sources and are not attributable to the authors.
   </div>
 
   <script>
     // Remember dismissal in this browser
     const KEY = "icbid_banner_closed";
     const banner = document.getElementById("banner");
-    const frame = document.querySelector(".frame");
+    const closeBtn = document.getElementById("close");
 
     function hideBanner() {
       banner.style.display = "none";
-      frame.style.minHeight = "0";
       localStorage.setItem(KEY, "1");
+      // Help the page collapse height
+      document.documentElement.style.height = "0";
+      document.body.style.height = "0";
     }
 
-    if (localStorage.getItem(KEY) === "1") {
-      hideBanner();
-    }
-
-    document.getElementById("close").addEventListener("click", hideBanner);
+    if (localStorage.getItem(KEY) === "1") hideBanner();
+    closeBtn.addEventListener("click", hideBanner);
   </script>
 </body>
 </html>
